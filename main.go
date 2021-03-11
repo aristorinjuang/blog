@@ -32,7 +32,6 @@ func init() {
 }
 
 func main() {
-	http.HandleFunc("/single", controllers.Controller)
 	http.HandleFunc("/login", controllers.Login)
 	http.HandleFunc("/logout", controllers.Logout)
 	http.HandleFunc("/register", controllers.Register)

@@ -58,22 +58,6 @@ func permission(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Controller is a default controller.
-func Controller(w http.ResponseWriter, r *http.Request) {
-	view := strings.Split(r.URL.Path, "/")[1]
-	if view == "" {
-		view = "index"
-	}
-
-	var response bytes.Buffer
-	if err := views.Tmpl.ExecuteTemplate(&response, view+".gohtml", nil); err != nil {
-		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
-		return
-	}
-
-	io.WriteString(w, response.String())
-}
-
 // Index is a homepage controller.
 func Index(w http.ResponseWriter, r *http.Request) {
 	path := strings.Split(r.URL.Path, "/")[1]
@@ -108,7 +92,13 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case http.MethodGet:
-		Controller(w, r)
+		var response bytes.Buffer
+		if err := views.Tmpl.ExecuteTemplate(&response, "register.gohtml", nil); err != nil {
+			http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+			return
+		}
+
+		io.WriteString(w, response.String())
 	case http.MethodPost:
 		user := &models.User{
 			Name:  r.FormValue("name"),
@@ -148,7 +138,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case http.MethodGet:
-		Controller(w, r)
+		var response bytes.Buffer
+		if err := views.Tmpl.ExecuteTemplate(&response, "login.gohtml", nil); err != nil {
+			http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+			return
+		}
+
+		io.WriteString(w, response.String())
 	case http.MethodPost:
 		user := &models.User{
 			Email: r.FormValue("email"),

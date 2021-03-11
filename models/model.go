@@ -50,14 +50,13 @@ func FindArticle(slug string) *Article {
 		if err != nil {
 			log.Fatal(err)
 		}
+		parsedCreatedAt, err := time.Parse("2006-01-02 15:04:05", string(createdAt))
+		if err != nil {
+			log.Fatal(err)
+		}
+		article.CreatedAt = parsedCreatedAt
+		article.Author = *user
 	}
-
-	parsedCreatedAt, err := time.Parse("2006-01-02 15:04:05", string(createdAt))
-	if err != nil {
-		log.Fatal(err)
-	}
-	article.CreatedAt = parsedCreatedAt
-	article.Author = *user
 
 	return article
 }
@@ -136,13 +135,12 @@ func (user User) FindArticle(id int) *Article {
 		if err != nil {
 			log.Fatal(err)
 		}
+		parsedCreatedAt, err := time.Parse("2006-01-02 15:04:05", string(createdAt))
+		if err != nil {
+			log.Fatal(err)
+		}
+		article.CreatedAt = parsedCreatedAt
 	}
-
-	parsedCreatedAt, err := time.Parse("2006-01-02 15:04:05", string(createdAt))
-	if err != nil {
-		log.Fatal(err)
-	}
-	article.CreatedAt = parsedCreatedAt
 
 	return article
 }
