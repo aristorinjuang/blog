@@ -33,5 +33,5 @@ var functions = template.FuncMap{
 }
 
 func init() {
-	Tmpl = template.Must(template.New("views/*.gohtml").Funcs(functions).ParseGlob("views/*.gohtml"))
+	Tmpl = template.Must(template.New("./views/*.gohtml").Funcs(functions).ParseGlob("./views/*.gohtml"))
 }

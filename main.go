@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -37,7 +38,7 @@ func main() {
 	http.HandleFunc("/register", controllers.Register)
 	http.HandleFunc("/dashboard", controllers.Dashboard)
 	http.HandleFunc("/", controllers.Index)
-
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))
-	http.ListenAndServe(":8000", nil)
+	log.Println(fmt.Sprintf("Your app is running on port %s.", os.Getenv("PORT")))
+	log.Println(http.ListenAndServe(":"+os.Getenv("PORT"), nil))
 }
